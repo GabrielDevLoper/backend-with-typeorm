@@ -19,7 +19,9 @@ export class Pacient {
   @Column()
   pront_req_interno: string;
 
-  @ManyToOne((type) => User, (user) => User)
+  @ManyToOne((type) => User, (user) => User, {
+    eager: true,
+  })
   user: User;
 
   @Column()

@@ -1,12 +1,30 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
+import { getRepository, Connection } from "typeorm";
 import { Pacient } from "@models/Pacient";
 import { User } from "@models/User";
 
 export default {
+  async index(req: Request, res: Response) {
+    const { user_id } = req.params;
+    const repo = getRepository(Pacient);
+
+    try {
+      const pacient = await repo.find({
+        where: {
+          user: {
+            id: Number(user_id),
+          },
+        },
+      });
+
+      return res.json(pacient);
+    } catch (error) {
+      return res.json(error);
+    }
+  },
+
   async create(req: Request, res: Response) {
     const { user_id } = req.params;
-
     const {
       name,
       pront_req_interno,
@@ -15,14 +33,8 @@ export default {
       medico_solicitante,
       fone,
     } = req.body;
-    const repo = getRepository(Pacient);
-    const repoUser = getRepository(User);
 
-    const user = await repoUser.findOne({
-      where: {
-        id: Number(user_id),
-      },
-    });
+    const repo = getRepository(Pacient);
 
     try {
       await repo.save({
@@ -32,7 +44,9 @@ export default {
         procedencia,
         medico_solicitante,
         fone,
-        user,
+        user: {
+          id: Number(user_id),
+        },
       });
       return res.json({ message: "Paciente cadastrado com sucesso!" });
     } catch (error) {

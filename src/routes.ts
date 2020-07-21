@@ -11,5 +11,6 @@ routes.delete("/users/:user_id", UserController.delete);
 routes.get("/users/:user_id", UserController.show);
 
 routes.post("/users/:user_id/pacients", PacientController.create);
+routes.get("/users/:user_id/pacients", PacientController.index);
 
 export default routes;
