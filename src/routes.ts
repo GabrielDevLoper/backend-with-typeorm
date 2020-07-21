@@ -11,6 +11,9 @@ routes.delete("/users/:user_id", UserController.delete);
 routes.get("/users/:user_id", UserController.show);
 
 routes.post("/users/:user_id/pacients", PacientController.create);
-routes.get("/users/:user_id/pacients", PacientController.index);
+//Filtrar pacientes que o usuario cadastrou
+routes.get("/pacients", PacientController.index);
+//Filtra apenas o paciente especifico
+routes.get("/pacients/:pacient_id", PacientController.show);
 
 export default routes;

@@ -36,6 +36,17 @@ export class Pacient {
   @Column()
   fone: string;
 
+  @Column({
+    nullable: true,
+    default: "Sem data definida",
+  })
+  data_entrega: string;
+
+  @Column({
+    default: false,
+  })
+  status: Boolean;
+
   @CreateDateColumn()
   created_at: Date;
 
