@@ -16,6 +16,12 @@ export class User {
   })
   username: string;
 
+  @Column({
+    unique: true,
+    nullable: true,
+  })
+  email: string;
+
   @Column()
   password: string;
 
