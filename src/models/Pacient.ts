@@ -4,7 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from "typeorm";
+import { User } from "./User";
 
 @Entity("pacients")
 export class Pacient {
@@ -16,6 +18,9 @@ export class Pacient {
 
   @Column()
   pront_req_interno: string;
+
+  @ManyToOne((type) => User, (user) => User)
+  user: User;
 
   @Column()
   convenio: string;
