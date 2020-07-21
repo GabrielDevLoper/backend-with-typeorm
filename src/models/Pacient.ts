@@ -5,8 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { User } from "./User";
+import { Exams } from "./Exams";
 
 @Entity("pacients")
 export class Pacient {
@@ -23,6 +26,10 @@ export class Pacient {
     eager: true,
   })
   user: User;
+
+  @ManyToMany((type) => Exams)
+  @JoinTable()
+  exams: Exams[];
 
   @Column()
   convenio: string;

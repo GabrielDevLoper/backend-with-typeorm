@@ -10,8 +10,9 @@ routes.put("/users/:user_id", UserController.update);
 routes.delete("/users/:user_id", UserController.delete);
 routes.get("/users/:user_id", UserController.show);
 
+//cadastra pacientes ligado a um usuario
 routes.post("/users/:user_id/pacients", PacientController.create);
-//Filtrar pacientes que o usuario cadastrou
+//Filtra todos os pacientes que os usuario cadastrou
 routes.get("/pacients", PacientController.index);
 //Filtra apenas o paciente especifico
 routes.get("/pacients/:pacient_id", PacientController.show);
