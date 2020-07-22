@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  JoinColumn,
 } from "typeorm";
 import { Pacient } from "./Pacient";
 import { IsEmail, MaxLength } from "class-validator";

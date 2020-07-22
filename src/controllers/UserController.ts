@@ -2,13 +2,14 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { User } from "@models/User";
 import { validate } from "class-validator";
+import bcrypt from 'bcrypt';
 
 export default {
   async index(req: Request, res: Response) {
     try {
       const users = await getRepository(User).find({
         order: {
-          username: "ASC",
+          id: "ASC",
         },
       });
       return res.json(users);
@@ -38,12 +39,13 @@ export default {
       if (findUsers || findUserEmail) {
         return res.json({ message: "email ou username já foi utilizado" });
       }
-
+      //criptografando password
+      const passwordHash = await bcrypt.hash(password, 8);
       //validando campos do meu model
       const pacient = repo.create({
         username,
         email,
-        password,
+        password: passwordHash,
       });
 
       const errors = await validate(pacient);
