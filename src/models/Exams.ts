@@ -1,10 +1,12 @@
 import {
   Entity,
+  PrimaryGeneratedColumn,
+  Column,
   CreateDateColumn,
   UpdateDateColumn,
-  Column,
-  PrimaryGeneratedColumn,
+  ManyToOne,
 } from "typeorm";
+import { TypeExams } from "./TypeExams";
 
 @Entity("exams")
 export class Exams {
@@ -12,15 +14,13 @@ export class Exams {
   id: number;
 
   @Column()
-  title: string;
-
-  @Column()
   description: string;
 
-  @Column({
-    unique: true,
-  })
+  @Column()
   code: string;
+
+  @ManyToOne((type) => TypeExams, (type_exams) => TypeExams)
+  type_exam: TypeExams;
 
   @CreateDateColumn()
   created_at: Date;

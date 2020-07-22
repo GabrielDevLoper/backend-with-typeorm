@@ -27,7 +27,9 @@ export class Pacient {
   })
   user: User;
 
-  @ManyToMany((type) => Exams)
+  @ManyToMany((type) => Exams, {
+    eager: true,
+  })
   @JoinTable()
   exams: Exams[];
 
