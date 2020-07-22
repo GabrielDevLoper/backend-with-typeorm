@@ -8,6 +8,8 @@ import {
   ManyToMany,
   JoinTable,
 } from "typeorm";
+import {} from "class-validator";
+
 import { User } from "./User";
 import { Exams } from "./Exams";
 

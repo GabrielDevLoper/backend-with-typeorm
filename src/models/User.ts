@@ -7,6 +7,7 @@ import {
   OneToMany,
 } from "typeorm";
 import { Pacient } from "./Pacient";
+import { IsEmail, Length } from "class-validator";
 
 @Entity("users")
 export class User {
@@ -16,12 +17,14 @@ export class User {
   @Column({
     unique: true,
   })
+  @Length(5, 20)
   username: string;
 
   @Column({
     unique: true,
     nullable: true,
   })
+  @IsEmail()
   email: string;
 
   @Column()
