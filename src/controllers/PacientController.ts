@@ -84,6 +84,11 @@ export default {
       exams,
     } = req.body;
 
+    //tratamento de erro caso o usuario esquece de registrar os exames do paciente
+    if (!exams) {
+      return res.json({ message: "Por favor selecione os exames do paciente" });
+    }
+
     const typeExam = exams
       .split(",")
       .map((exam: string) => Number(exam.trim()))
