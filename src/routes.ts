@@ -10,9 +10,6 @@ import checkRoles from "./middlewares/checkRoles";
 
 const routes = Router();
 
-/**Rota para logar no sistema */
-routes.post("/sessions", SessionController.create);
-
 /*Rotas para os usuarios */
 routes.post("/users", UserController.create);
 routes.get("/users", authMiddleware, UserController.index);
@@ -29,6 +26,9 @@ routes.delete(
   UserController.delete
 );
 routes.get("/users/:user_id", authMiddleware, UserController.show);
+
+/**Rota para logar no sistema */
+routes.post("/sessions", SessionController.create);
 
 /*Rotas para os pacientes */
 routes.post(
