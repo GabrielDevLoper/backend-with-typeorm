@@ -16,7 +16,12 @@ routes.post("/sessions", SessionController.create);
 /*Rotas para os usuarios */
 routes.post("/users", UserController.create);
 routes.get("/users", authMiddleware, UserController.index);
-routes.put("/users/:user_id", authMiddleware, UserController.update);
+routes.put(
+  "/users/:user_id",
+  authMiddleware,
+  checkRoles("ADMIN"),
+  UserController.update
+);
 routes.delete(
   "/users/:user_id",
   authMiddleware,

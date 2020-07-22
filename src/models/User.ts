@@ -33,7 +33,9 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
+  @Column({
+    default: "COMUM",
+  })
   role: string;
 
   //esta função e executada sempre antes de salvar os dados no
