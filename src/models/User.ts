@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from "typeorm";
 import { Pacient } from "./Pacient";
-import { IsEmail, Length } from "class-validator";
+import { IsEmail, MaxLength } from "class-validator";
 
 @Entity("users")
 export class User {
@@ -17,14 +17,14 @@ export class User {
   @Column({
     unique: true,
   })
-  @Length(5, 20)
+  @MaxLength(20, { message: "O username deve possuir no maximo 20 caracteres" })
   username: string;
 
   @Column({
     unique: true,
     nullable: true,
   })
-  @IsEmail()
+  @IsEmail({}, { message: "Email inválido" })
   email: string;
 
   @Column()

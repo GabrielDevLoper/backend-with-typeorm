@@ -86,7 +86,9 @@ export default {
 
     //tratamento de erro caso o usuario esquece de registrar os exames do paciente
     if (!exams) {
-      return res.json({ message: "Por favor selecione os exames do paciente" });
+      return res.json({
+        messageAlert: "Por favor selecione os exames do paciente",
+      });
     }
 
     //esta função separa os id dos exames pela virgula

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { User } from "@models/User";
+import { validate } from "class-validator";
 
 export default {
   async index(req: Request, res: Response) {
@@ -16,27 +17,42 @@ export default {
     }
   },
   async create(req: Request, res: Response) {
-    const { username, password } = req.body;
-    const repo = getRepository(User);
-
-    const data = {
-      username,
-      password,
-    };
-
-    const findUsers = await repo.findOne({
-      where: {
-        username,
-      },
-    });
-
-    if (findUsers) {
-      return res.json({ message: "Usuário ja existe" });
-    }
-
     try {
-      await repo.save(data);
-      return res.json({ message: "Usuário cadastrado com sucesso!" });
+      const { username, email, password } = req.body;
+      const repo = getRepository(User);
+
+      //query verifica se o usuário ja foi registrado para não duplicar
+      const findUsers = await repo.findOne({
+        where: {
+          username,
+        },
+      });
+
+      //query verifica se o usuário ja foi registrado para não duplicar
+      const findUserEmail = await repo.findOne({
+        where: {
+          email,
+        },
+      });
+
+      if (findUsers || findUserEmail) {
+        return res.json({ message: "email ou username já foi utilizado" });
+      }
+
+      //validando campos do meu model
+      const pacient = repo.create({
+        username,
+        email,
+        password,
+      });
+
+      const errors = await validate(pacient);
+
+      if (errors.length === 0) {
+        await repo.save(pacient);
+        return res.json({ message: "Usuário cadastrado com sucesso!" });
+      }
+      return res.json({ messageValidation: errors[0].constraints.isEmail });
     } catch (error) {
       return res.json(error);
     }
