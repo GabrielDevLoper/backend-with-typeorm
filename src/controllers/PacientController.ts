@@ -89,6 +89,7 @@ export default {
       return res.json({ message: "Por favor selecione os exames do paciente" });
     }
 
+    //esta função separa os id dos exames pela virgula
     const typeExam = exams
       .split(",")
       .map((exam: string) => Number(exam.trim()))
