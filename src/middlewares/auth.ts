@@ -17,7 +17,7 @@ export default function authMiddleware(
 
   if (!authorization) {
     return res.json({
-      messageAlert: "Você não tem permissão para excluir os usuários",
+      messageAlert: "Você não tem permissão",
     });
   }
 

@@ -18,7 +18,7 @@ export default {
   },
   async create(req: Request, res: Response) {
     try {
-      const { username, email, password } = req.body;
+      const { username, email, password, role } = req.body;
       const repo = getRepository(User);
 
       //query verifica se o usuário ja foi registrado para não duplicar
@@ -40,9 +40,10 @@ export default {
       }
 
       const pacient = repo.create({
-        username,
+        username: username.trim(),
         email,
-        password,
+        password: password.trim(),
+        role: role.toUpperCase().trim(),
       });
 
       const errors = await validate(pacient);

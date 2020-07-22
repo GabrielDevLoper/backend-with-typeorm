@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  JoinColumn,
   BeforeInsert,
   BeforeUpdate,
 } from "typeorm";
@@ -34,6 +33,11 @@ export class User {
   @Column()
   password: string;
 
+  @Column()
+  role: string;
+
+  //esta função e executada sempre antes de salvar os dados no
+  //banco de dados e sempre quando houver update
   @BeforeInsert()
   @BeforeUpdate()
   passwordHash() {
