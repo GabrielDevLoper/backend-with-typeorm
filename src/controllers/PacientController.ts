@@ -6,6 +6,7 @@ import pdf from "html-pdf";
 import os from "os";
 import path from "path";
 import ejs from "ejs";
+import faker from "faker";
 
 export default {
   async index(req: Request, res: Response) {
@@ -109,6 +110,16 @@ export default {
 
     const repo = getRepository(Pacient);
 
+    //query verifica se o paciente ja foi cadastrado no sistema
+    const pacient = await repo.findOne({
+      where: {
+        pront_req_interno,
+      },
+    });
+    if (pacient) {
+      return res.json({ messageAlert: "Paciente já existe" });
+    }
+
     try {
       if (data_entrega) {
         await repo.save({
@@ -181,13 +192,16 @@ export default {
         } else {
           pdf
             .create(html, {})
-            .toFile(`${desktopDir}/Pacientes.pdf`, (err, res) => {
-              if (err) {
-                return err;
-              } else {
-                console.log(res);
+            .toFile(
+              `${desktopDir}/${faker.random.number()}.pdf`,
+              (err, res) => {
+                if (err) {
+                  return err;
+                } else {
+                  console.log(res);
+                }
               }
-            });
+            );
         }
       }
     );
@@ -216,7 +230,7 @@ export default {
         } else {
           pdf
             .create(html, {})
-            .toFile(`${desktopDir}/Pacientes.pdf`, (err, res) => {
+            .toFile(`${desktopDir}/${pacient.name}.pdf`, (err, res) => {
               if (err) {
                 return err;
               } else {
