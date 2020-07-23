@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
-import { getRepository, Connection } from "typeorm";
+import { getRepository } from "typeorm";
 import { Pacient } from "@models/Pacient";
 import { Exams } from "@models/Exams";
+import pdf from "html-pdf";
+import os from "os";
+import path from "path";
+import ejs from "ejs";
 
 export default {
   async index(req: Request, res: Response) {
@@ -159,5 +163,70 @@ export default {
     } catch (error) {
       return res.json(error);
     }
+  },
+
+  async allUsersPDF(req: Request, res: Response) {
+    const repo = getRepository(Pacient);
+
+    const pacient = await repo.find();
+    const desktopDir = path.join(os.homedir(), "Desktop");
+
+    // gerando pdf dos clientes
+    ejs.renderFile(
+      path.resolve(__dirname, "..", "templates", "all-users.ejs"),
+      { pacients: pacient },
+      (err, html) => {
+        if (err) {
+          console.log(err);
+        } else {
+          pdf
+            .create(html, {})
+            .toFile(`${desktopDir}/Pacientes.pdf`, (err, res) => {
+              if (err) {
+                return err;
+              } else {
+                console.log(res);
+              }
+            });
+        }
+      }
+    );
+
+    return res.json({ message: "ok" });
+  },
+
+  async showUserPDF(req: Request, res: Response) {
+    const { pacient_id } = req.params;
+    const repo = getRepository(Pacient);
+
+    const pacient = await repo.findOne({
+      where: {
+        id: Number(pacient_id),
+      },
+    });
+    const desktopDir = path.join(os.homedir(), "Desktop");
+
+    // gerando pdf de um cliente especifico
+    ejs.renderFile(
+      path.resolve(__dirname, "..", "templates", "show-user.ejs"),
+      { pacients: pacient },
+      (err, html) => {
+        if (err) {
+          console.log(err);
+        } else {
+          pdf
+            .create(html, {})
+            .toFile(`${desktopDir}/Pacientes.pdf`, (err, res) => {
+              if (err) {
+                return err;
+              } else {
+                console.log(res);
+              }
+            });
+        }
+      }
+    );
+
+    return res.json({ message: "ok" });
   },
 };

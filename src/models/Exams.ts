@@ -19,7 +19,9 @@ export class Exams {
   @Column()
   code: string;
 
-  @ManyToOne((type) => TypeExams, (type_exams) => TypeExams)
+  @ManyToOne((type) => TypeExams, (type_exams) => TypeExams, {
+    eager: true,
+  })
   type_exam: TypeExams;
 
   @CreateDateColumn()

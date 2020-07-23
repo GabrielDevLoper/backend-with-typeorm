@@ -11,6 +11,7 @@ import {
 import {} from "class-validator";
 
 import { User } from "./User";
+
 import { Exams } from "./Exams";
 
 @Entity("pacients")

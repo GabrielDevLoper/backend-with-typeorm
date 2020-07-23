@@ -45,7 +45,7 @@ routes.post("/type_exams", authMiddleware, TypeExamsController.create);
 /*Rotas para os exames*/
 routes.post("/exams/:type_exam_id", authMiddleware, ExamsController.create);
 
-//rotas a partir daqui precisa que o usuário precise estar logado
-routes.use(authMiddleware);
+routes.get("/all-users", PacientController.allUsersPDF);
+routes.get("/show-user/:pacient_id", PacientController.showUserPDF);
 
 export default routes;

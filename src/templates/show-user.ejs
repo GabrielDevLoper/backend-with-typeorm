@@ -1,0 +1,43 @@
+<style>
+  table,
+  th,
+  td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th,
+  td {
+    padding: 5px;
+    text-align: left;
+  }
+</style>
+
+<h1 style="text-align: center;">Listagem dos Pacientes</h1>
+<br />
+
+<ul>
+  <li>Atendente: <%= pacients.user.username%></li>
+  <li>Nome do Paciente: <%= pacients.name%></li>
+  <li>Pront./Req./Interno: <%= pacients.pront_req_interno%></li>
+  <li>Convênio: <%= pacients.convenio%></li>
+  <li>Procedência: <%= pacients.procedencia%></li>
+  <li>Médico Solicitante: <%= pacients.medico_solicitante%></li>
+  <li>Fone: <%= pacients.fone%></li>
+  <li>Data de Entrega: <%= pacients.data_entrega%></li>
+  <h3 style="text-align: center;">Descrição dos Exames</h3>
+
+  <% pacients.exams.forEach(e => { %>
+
+  <li style="list-style-type: circle;">
+    Código: <%= e.code%>
+  </li>
+  <li style="list-style-type: circle; flex-direction: column;">
+    Descrição: <%= e.description%>
+  </li>
+  <br />
+
+  <% }) %>
+
+  <hr />
+  <br />
+</ul>
