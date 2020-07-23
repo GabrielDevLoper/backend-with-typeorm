@@ -38,6 +38,11 @@ routes.post(
 );
 routes.get("/pacients", authMiddleware, PacientController.index);
 routes.get("/pacients/:pacient_id", authMiddleware, PacientController.show);
+routes.put(
+  "/users/:user_id/pacients/:pacient_id",
+  authMiddleware,
+  PacientController.update
+);
 
 /*Rotas para os tipos de exames */
 routes.post("/type_exams", authMiddleware, TypeExamsController.create);

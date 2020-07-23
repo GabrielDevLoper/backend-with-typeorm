@@ -176,6 +176,72 @@ export default {
     }
   },
 
+  async update(req: Request, res: Response) {
+    const { user_id, pacient_id } = req.params;
+    const {
+      name,
+      pront_req_interno,
+      convenio,
+      procedencia,
+      medico_solicitante,
+      fone,
+      data_entrega,
+      exams,
+    } = req.body;
+
+    //esta função separa os id dos exames pela virgula
+    // const typeExam = exams
+    //   .split(",")
+    //   .map((exam: string) => Number(exam.trim()))
+    //   .map((examsId: number) => {
+    //     return examsId;
+    //   });
+
+    // //query q retorna o exames selecionados pelo paciente
+    // const exam = getRepository(Exams);
+    // const chosen_exams = await exam.findByIds(typeExam);
+
+    const repo = getRepository(Pacient);
+
+    const pacientWithDataEntrega = repo.create({
+      name,
+      pront_req_interno,
+      convenio,
+      procedencia,
+      medico_solicitante,
+      fone,
+      data_entrega,
+      status: true,
+      user: {
+        id: Number(user_id),
+      },
+    });
+
+    const pacientNotWithDataEntrega = repo.create({
+      name,
+      pront_req_interno,
+      convenio,
+      procedencia,
+      medico_solicitante,
+      fone,
+      user: {
+        id: Number(user_id),
+      },
+    });
+
+    try {
+      if (data_entrega) {
+        await repo.update({ id: Number(pacient_id) }, pacientWithDataEntrega);
+        return res.json({ message: "Paciente editado com sucesso!" });
+      }
+
+      await repo.update({ id: Number(pacient_id) }, pacientNotWithDataEntrega);
+      return res.json({ message: "Paciente editado com sucesso!" });
+    } catch (error) {
+      return res.json(error);
+    }
+  },
+
   async allUsersPDF(req: Request, res: Response) {
     const repo = getRepository(Pacient);
 
