@@ -7,6 +7,5 @@ define(TypeExams, (faker: typeof Faker) => {
 
   const type_exam = new TypeExams();
   type_exam.title = title;
-
   return type_exam;
 });

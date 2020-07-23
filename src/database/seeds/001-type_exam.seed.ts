@@ -20,7 +20,12 @@ export default class CreateTypeExam implements Seeder {
       .createQueryBuilder()
       .insert()
       .into(TypeExams)
-      .values([{ title: "CRAQUE" }])
+      .values([
+        { title: "BIOQUIMICA" },
+        { title: "IMONOLOGIA" },
+        { title: "HEMATOLOGIA" },
+        { title: "PARASITOLOGIA" },
+      ])
       .execute();
   }
 }

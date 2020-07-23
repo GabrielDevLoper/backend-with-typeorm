@@ -1,17 +1,3 @@
-<style>
-  table,
-  th,
-  td {
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-  th,
-  td {
-    padding: 5px;
-    text-align: left;
-  }
-</style>
-
 <h1 style="text-align: center;">Listagem dos Pacientes</h1>
 <br />
 
@@ -28,6 +14,9 @@
   <h3 style="text-align: center;">Descrição dos Exames</h3>
 
   <% p.exams.forEach(e => { %>
+  <li style="list-style-type: circle;">
+    Tipo de Exame: <%= e.type_exam.title%>
+  </li>
 
   <li style="list-style-type: circle;">
     Código: <%= e.code%>
