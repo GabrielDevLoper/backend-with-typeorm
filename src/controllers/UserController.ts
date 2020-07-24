@@ -60,11 +60,26 @@ export default {
 
   async update(req: Request, res: Response) {
     const { user_id } = req.params;
-    const { username, password } = req.body;
+    const { username, role, email, password } = req.body;
+
     const repo = getRepository(User);
 
+    const userUpdate: User = await repo.findOne(Number(user_id));
+
+    userUpdate.username = username;
+
+    if (email) {
+      userUpdate.email = email;
+    }
+    if (role) {
+      userUpdate.role = role;
+    }
+    if (password) {
+      userUpdate.password = password;
+    }
+
     try {
-      await repo.update({ id: Number(user_id) }, { username, password });
+      await repo.update(Number(user_id), userUpdate);
       return res.json({ message: "Usário editado com sucesso" });
     } catch (error) {
       return res.json(error);

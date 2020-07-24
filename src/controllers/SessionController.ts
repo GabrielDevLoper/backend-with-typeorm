@@ -30,6 +30,7 @@ export default {
       {
         id: user.id,
         username: user.username,
+        role: user.role,
       },
       process.env.SECRET_KEY,
       {
@@ -40,6 +41,7 @@ export default {
     return res.json({
       id: user.id,
       username: user.username,
+      role: user.role,
       token,
     });
   },

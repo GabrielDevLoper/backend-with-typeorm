@@ -6,7 +6,6 @@ import pdf from "html-pdf";
 import os from "os";
 import path from "path";
 import ejs from "ejs";
-import faker from "faker";
 import { User } from "@models/User";
 
 export default {

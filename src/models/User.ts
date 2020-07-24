@@ -46,9 +46,6 @@ export class User {
     this.password = bcrypt.hashSync(this.password, 8);
   }
 
-  @OneToMany((type) => Pacient, (pacients) => Pacient)
-  pacients: Pacient[];
-
   @CreateDateColumn()
   created_at: Date;
 
