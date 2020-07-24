@@ -47,7 +47,9 @@ export class Address {
   })
   number: number;
 
-  @OneToOne(() => Pacient)
+  @OneToOne(() => Pacient, {
+    onDelete: "CASCADE",
+  })
   @JoinColumn()
   pacient: Pacient;
 }

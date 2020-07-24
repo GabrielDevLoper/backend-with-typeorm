@@ -4,6 +4,11 @@ import { Address } from "@models/Address";
 import { Pacient } from "@models/Pacient";
 
 export default {
+  async index(req: Request, res: Response) {
+    const repo = await getRepository(Address).find();
+
+    return res.json(repo);
+  },
   async create(req: Request, res: Response) {
     const { pacient_id } = req.params;
     const { street, city, uf, neighborhood, zipcode, number } = req.body;

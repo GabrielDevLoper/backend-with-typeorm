@@ -51,6 +51,7 @@ routes.delete(
 );
 
 /**Rotas para os endereços */
+routes.get("/address", AddressController.index);
 routes.post("/pacients/:pacient_id/address", AddressController.create);
 
 /*Rotas para os tipos de exames */

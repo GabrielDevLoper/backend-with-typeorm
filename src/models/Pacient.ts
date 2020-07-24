@@ -10,12 +10,14 @@ import {
   JoinColumn,
   RelationId,
   BaseEntity,
+  OneToOne,
 } from "typeorm";
 import {} from "class-validator";
 
 import { User } from "./User";
 
 import { Exams } from "./Exams";
+import { Address } from "./Address";
 
 @Entity("pacients")
 export class Pacient extends BaseEntity {
