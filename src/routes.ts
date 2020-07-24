@@ -50,7 +50,16 @@ routes.delete(
 );
 
 /*Rotas para os tipos de exames */
-routes.post("/type_exams", authMiddleware, TypeExamsController.create);
+routes
+  .post("/type_exams", authMiddleware, TypeExamsController.create)
+  .get("/type_exams", authMiddleware, TypeExamsController.index)
+  .get("/type_exams/:type_exam_id", authMiddleware, TypeExamsController.show)
+  .put("/type_exams/:type_exam_id", authMiddleware, TypeExamsController.update)
+  .delete(
+    "/type_exams/:type_exam_id",
+    authMiddleware,
+    TypeExamsController.delete
+  );
 
 /*Rotas para os exames*/
 routes.post("/exams/:type_exam_id", authMiddleware, ExamsController.create);
