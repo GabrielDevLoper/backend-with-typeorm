@@ -16,6 +16,7 @@ export default {
       return res.json(error);
     }
   },
+
   async create(req: Request, res: Response) {
     try {
       const { username, email, password, role } = req.body;

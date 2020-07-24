@@ -4,6 +4,7 @@ import PacientController from "@controllers/PacientController";
 import TypeExamsController from "@controllers/TypeExamsController";
 import ExamsController from "@controllers/ExamsController";
 import SessionController from "@controllers/SessionController";
+import AddressController from "@controllers/AddressController";
 
 import authMiddleware from "./middlewares/auth";
 import checkRoles from "./middlewares/checkRoles";
@@ -49,6 +50,9 @@ routes.delete(
   PacientController.delete
 );
 
+/**Rotas para os endereços */
+routes.post("/pacients/:pacient_id/address", AddressController.create);
+
 /*Rotas para os tipos de exames */
 routes
   .post("/type_exams", authMiddleware, TypeExamsController.create)
@@ -63,6 +67,9 @@ routes
 
 /*Rotas para os exames*/
 routes.post("/exams/:type_exam_id", authMiddleware, ExamsController.create);
+routes.get("/exams", authMiddleware, ExamsController.index);
+routes.put("/exams/:exam_id", authMiddleware, ExamsController.update);
+routes.get("/exams/:exam_id", authMiddleware, ExamsController.show);
 
 routes.get("/all-users", PacientController.allUsersPDF);
 routes.get("/show-user/:pacient_id", PacientController.showUserPDF);
