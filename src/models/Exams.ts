@@ -5,11 +5,16 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
+  JoinColumn,
+  BaseEntity,
 } from "typeorm";
 import { TypeExams } from "./TypeExams";
+import { Pacient } from "./Pacient";
 
 @Entity("exams")
-export class Exams {
+export class Exams extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

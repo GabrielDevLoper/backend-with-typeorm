@@ -7,6 +7,9 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
+  JoinColumn,
+  RelationId,
+  BaseEntity,
 } from "typeorm";
 import {} from "class-validator";
 
@@ -15,7 +18,7 @@ import { User } from "./User";
 import { Exams } from "./Exams";
 
 @Entity("pacients")
-export class Pacient {
+export class Pacient extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -30,10 +33,11 @@ export class Pacient {
   })
   user: User;
 
-  @ManyToMany((type) => Exams, {
+  @ManyToMany(() => Exams, {
     eager: true,
+    cascade: ["update"],
   })
-  @JoinTable()
+  @JoinTable({ name: "pacients_exams_exams" })
   exams: Exams[];
 
   @Column()

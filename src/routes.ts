@@ -43,6 +43,11 @@ routes.put(
   authMiddleware,
   PacientController.update
 );
+routes.delete(
+  "/pacients/:pacient_id",
+  authMiddleware,
+  PacientController.delete
+);
 
 /*Rotas para os tipos de exames */
 routes.post("/type_exams", authMiddleware, TypeExamsController.create);

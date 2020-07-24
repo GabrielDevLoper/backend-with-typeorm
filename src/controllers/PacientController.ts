@@ -7,6 +7,7 @@ import os from "os";
 import path from "path";
 import ejs from "ejs";
 import faker from "faker";
+import { User } from "@models/User";
 
 export default {
   async index(req: Request, res: Response) {
@@ -189,54 +190,59 @@ export default {
       exams,
     } = req.body;
 
-    //esta função separa os id dos exames pela virgula
-    // const typeExam = exams
-    //   .split(",")
-    //   .map((exam: string) => Number(exam.trim()))
-    //   .map((examsId: number) => {
-    //     return examsId;
-    //   });
-
-    // //query q retorna o exames selecionados pelo paciente
-    // const exam = getRepository(Exams);
-    // const chosen_exams = await exam.findByIds(typeExam);
-
     const repo = getRepository(Pacient);
+    const user = getRepository(User);
 
-    const pacientWithDataEntrega = repo.create({
-      name,
-      pront_req_interno,
-      convenio,
-      procedencia,
-      medico_solicitante,
-      fone,
-      data_entrega,
-      status: true,
-      user: {
-        id: Number(user_id),
-      },
+    const updatePacient: Pacient = await repo.findOne(Number(pacient_id), {
+      relations: ["exams"],
     });
+    const selectUser: User = await user.findOne(Number(user_id));
 
-    const pacientNotWithDataEntrega = repo.create({
-      name,
-      pront_req_interno,
-      convenio,
-      procedencia,
-      medico_solicitante,
-      fone,
-      user: {
-        id: Number(user_id),
-      },
-    });
+    if (exams) {
+      // esta função separa os id dos exames pela virgula
+      const typeExam = exams
+        .split(",")
+        .map((exam: string) => Number(exam.trim()))
+        .map((examsId: number) => {
+          return examsId;
+        });
+
+      // query q retorna o exames selecionados pelo paciente
+      const exam = getRepository(Exams);
+      const chosen_exams = await exam.findByIds(typeExam);
+      //editando os exames
+      updatePacient.exams = chosen_exams;
+    }
+
+    if (data_entrega) {
+      updatePacient.data_entrega = data_entrega;
+      updatePacient.status = true;
+    }
+
+    updatePacient.name = name;
+    updatePacient.procedencia = procedencia;
+    updatePacient.pront_req_interno = pront_req_interno;
+    updatePacient.user = selectUser;
+    updatePacient.convenio = convenio;
+    updatePacient.medico_solicitante = medico_solicitante;
+    updatePacient.fone = fone;
 
     try {
-      if (data_entrega) {
-        await repo.update({ id: Number(pacient_id) }, pacientWithDataEntrega);
-        return res.json({ message: "Paciente editado com sucesso!" });
-      }
-
-      await repo.update({ id: Number(pacient_id) }, pacientNotWithDataEntrega);
+      await updatePacient.save();
       return res.json({ message: "Paciente editado com sucesso!" });
+    } catch (error) {
+      return res.json(error);
+    }
+  },
+
+  async delete(req: Request, res: Response) {
+    const { pacient_id } = req.params;
+
+    try {
+      const repo = getRepository(Pacient);
+
+      await repo.delete({ id: Number(pacient_id) });
+      return res.json({ message: "Paciente excluído com sucesso" });
     } catch (error) {
       return res.json(error);
     }
@@ -247,6 +253,8 @@ export default {
 
     const pacient = await repo.find();
     const desktopDir = path.join(os.homedir(), "Desktop");
+
+    const date = new Date();
 
     // gerando pdf dos clientes
     ejs.renderFile(
@@ -259,7 +267,7 @@ export default {
           pdf
             .create(html, {})
             .toFile(
-              `${desktopDir}/${faker.random.number()}.pdf`,
+              `${desktopDir}/Pacientes/${date.getDate()}-${date.getMonth()}-${date.getFullYear()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}.pdf`,
               (err, res) => {
                 if (err) {
                   return err;
@@ -286,6 +294,8 @@ export default {
     });
     const desktopDir = path.join(os.homedir(), "Desktop");
 
+    let date = new Date();
+
     // gerando pdf de um cliente especifico
     ejs.renderFile(
       path.resolve(__dirname, "..", "templates", "show-user.ejs"),
@@ -296,13 +306,18 @@ export default {
         } else {
           pdf
             .create(html, {})
-            .toFile(`${desktopDir}/${pacient.name}.pdf`, (err, res) => {
-              if (err) {
-                return err;
-              } else {
-                console.log(res);
+            .toFile(
+              `${desktopDir}/${
+                pacient.name
+              }/${date.getDate()}-${date.getMonth()}-${date.getFullYear()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}.pdf`,
+              (err, res) => {
+                if (err) {
+                  return err;
+                } else {
+                  console.log(res);
+                }
               }
-            });
+            );
         }
       }
     );

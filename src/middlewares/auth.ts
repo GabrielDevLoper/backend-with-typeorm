@@ -32,6 +32,6 @@ export default function authMiddleware(
 
     return next();
   } catch (error) {
-    return res.json({ message: "token inválido" });
+    return res.json({ message: "Você não está autenticado" });
   }
 }
