@@ -38,4 +38,19 @@ export default {
       return res.json(error);
     }
   },
+
+  async delete(req: Request, res: Response) {
+    const { address_id } = req.params;
+
+    const repo = getRepository(Address);
+    try {
+    await repo.delete(Number(address_id));
+    return res.json({message: "Endereço excluído com sucesso"})
+    } catch (error) {
+      
+    }
+  }
+
+
+
 };
