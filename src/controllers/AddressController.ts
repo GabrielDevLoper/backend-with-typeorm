@@ -9,6 +9,7 @@ export default {
 
     return res.json(repo);
   },
+
   async create(req: Request, res: Response) {
     const { pacient_id } = req.params;
     const { street, city, uf, neighborhood, zipcode, number } = req.body;
@@ -49,8 +50,11 @@ export default {
     } catch (error) {
       
     }
-  }
+  },
 
+  async update(req: Request, res: Response) {
+    const { address_id} = req.params
+  }
 
 
 };
