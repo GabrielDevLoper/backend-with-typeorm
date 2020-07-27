@@ -45,16 +45,28 @@ export default {
 
     const repo = getRepository(Address);
     try {
-    await repo.delete(Number(address_id));
-    return res.json({message: "Endereço excluído com sucesso"})
+      await repo.delete(Number(address_id));
+      return res.json({ message: "Endereço excluído com sucesso" });
     } catch (error) {
-      
+      return res.json(error);
     }
   },
 
   async update(req: Request, res: Response) {
-    const { address_id} = req.params
-  }
+    const { address_id } = req.params;
+    const { street, city, uf, neighborhood, zipcode, number } = req.body;
 
+    const repo = getRepository(Address);
 
+    await repo.update(Number(address_id), {
+      street,
+      city,
+      uf,
+      neighborhood,
+      zipcode,
+      number,
+    });
+
+    return res.json({ message: "Endereço editado com sucesso!" });
+  },
 };

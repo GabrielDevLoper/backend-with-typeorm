@@ -53,7 +53,8 @@ routes.delete(
 /**Rotas para os endereços */
 routes.get("/address", AddressController.index);
 routes.post("/pacients/:pacient_id/address", AddressController.create);
-routes.delete("/pacients/:address_id", AddressController.delete);
+routes.delete("/address/:address_id", AddressController.delete);
+routes.put("/address/:address_id", AddressController.update);
 
 /*Rotas para os tipos de exames */
 routes
