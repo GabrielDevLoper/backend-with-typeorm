@@ -16,7 +16,7 @@ export default function authMiddleware(
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return res.json({
+    return res.sendStatus(401).json({
       messageAlert: "Você não tem permissão",
     });
   }
