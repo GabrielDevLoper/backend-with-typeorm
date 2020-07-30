@@ -96,17 +96,18 @@ export default {
       });
     }
 
+    /**Utilizar está função apenas para testar a api usando insomnia pois no fron ele ja retornou um array de id */
     //esta função separa os id dos exames pela virgula
-    const typeExam = exams
-      .split(",")
-      .map((exam: string) => Number(exam.trim()))
-      .map((examsId: number) => {
-        return examsId;
-      });
+    // const typeExam = exams
+    //   .split(",")
+    //   .map((exam: string) => Number(exam.trim()))
+    //   .map((examsId: number) => {
+    //     return examsId;
+    //   });
 
     //query q retorna o exames selecionados pelo paciente
     const exam = getRepository(Exams);
-    const chosen_exams = await exam.findByIds(typeExam);
+    const chosen_exams = await exam.findByIds(exams);
 
     const repo = getRepository(Pacient);
 
