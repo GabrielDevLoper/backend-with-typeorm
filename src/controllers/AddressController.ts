@@ -69,4 +69,22 @@ export default {
 
     return res.json({ message: "Endereço editado com sucesso!" });
   },
+
+  async show(req: Request, res: Response) {
+    const { pacient_id } = req.params;
+    const repo = getRepository(Address);
+
+    try {
+      const address = await repo.findOne({
+        where: {
+          pacient: {
+            id: Number(pacient_id),
+          },
+        },
+      });
+      return res.json(address);
+    } catch (error) {
+      return res.json(error);
+    }
+  },
 };

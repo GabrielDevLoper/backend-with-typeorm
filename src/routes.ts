@@ -55,6 +55,7 @@ routes.get("/address", AddressController.index);
 routes.post("/pacients/:pacient_id/address", AddressController.create);
 routes.delete("/address/:address_id", AddressController.delete);
 routes.put("/address/:address_id", AddressController.update);
+routes.get("/pacients/:pacient_id/address", AddressController.show);
 
 /*Rotas para os tipos de exames */
 routes
