@@ -123,7 +123,7 @@ export default {
 
     try {
       if (data_entrega) {
-        await repo.save({
+        const response = await repo.save({
           name,
           pront_req_interno,
           convenio,
@@ -138,10 +138,10 @@ export default {
           exams: chosen_exams,
         });
 
-        return res.json({ message: "Paciente cadastrado com sucesso!" });
+        return res.json({ message: "Paciente cadastrado com sucesso!", id: response.id });
       }
 
-      await repo.save({
+      const response = await repo.save({
         name,
         pront_req_interno,
         convenio,
@@ -154,7 +154,7 @@ export default {
         exams: chosen_exams,
       });
 
-      return res.json({ message: "Paciente cadastrado com sucesso!" });
+      return res.json({ message: "Paciente cadastrado com sucesso!", id: response.id });
     } catch (error) {
       return res.json(error);
     }
@@ -200,16 +200,16 @@ export default {
 
     if (exams) {
       // esta função separa os id dos exames pela virgula
-      const typeExam = exams
-        .split(",")
-        .map((exam: string) => Number(exam.trim()))
-        .map((examsId: number) => {
-          return examsId;
-        });
+      // const typeExam = exams
+      //   .split(",")
+      //   .map((exam: string) => Number(exam.trim()))
+      //   .map((examsId: number) => {
+      //     return examsId;
+      //   });
 
       // query q retorna o exames selecionados pelo paciente
       const exam = getRepository(Exams);
-      const chosen_exams = await exam.findByIds(typeExam);
+      const chosen_exams = await exam.findByIds(exams);
       //editando os exames
       updatePacient.exams = chosen_exams;
     }
