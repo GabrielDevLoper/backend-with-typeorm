@@ -1,28 +1,67 @@
-<ul>
-  <li>Atendente: <%= pacients.user.username%></li>
-  <li>Nome do Paciente: <%= pacients.name%></li>
-  <li>Pront./Req./Interno: <%= pacients.pront_req_interno%></li>
-  <li>Convênio: <%= pacients.convenio%></li>
-  <li>Procedência: <%= pacients.procedencia%></li>
-  <li>Médico Solicitante: <%= pacients.medico_solicitante%></li>
-  <li>Fone: <%= pacients.fone%></li>
-  <li>Data de Entrega: <%= pacients.data_entrega%></li>
-  <h3 style="text-align: center;">Descrição dos Exames</h3>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documento</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style type="text/css">
+      body {
+        font-family: Archivo;
+      }
 
-  <% pacients.exams.forEach(e => { %>
-  <li style="list-style-type: circle;">
-    Tipo de Exame: <%= e.type_exam.title%>
-  </li>
-  <li style="list-style-type: circle;">
-    Código: <%= e.code%>
-  </li>
-  <li style="list-style-type: circle; flex-direction: column;">
-    Descrição: <%= e.description%>
-  </li>
-  <br />
+      .group-fields {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+    </style>
+  </head>
+  <body>
+    <ul>
+      <div class="group-fields">
+        <div class="fields">
+          <li>Atendente: <strong><%= pacients.user.username%></strong></li>
+          <li>Nome do Paciente: <strong><%= pacients.name%></strong></li>
+          <li>
+            Pront./Req./Interno:
+            <strong><%= pacients.pront_req_interno%></strong>
+          </li>
+          <li>Convênio: <strong><%= pacients.convenio%></strong></li>
+        </div>
 
-  <% }) %>
+        <div class="fields">
+          <li>Procedência: <strong><%= pacients.procedencia%></strong></li>
+          <li>
+            Médico Solicitante:
+            <strong><%= pacients.medico_solicitante%></strong>
+          </li>
+          <li>Fone: <strong><%= pacients.fone%></strong></li>
+          <li>Data de Entrega: <strong><%= pacients.data_entrega%></strong></li>
+        </div>
+      </div>
 
-  <hr />
-  <br />
-</ul>
+      <h3 style="text-align: center;">Descrição dos Exames</h3>
+
+      <% pacients.exams.forEach(e => { %>
+      <li style="list-style-type: circle;">
+        Tipo de Exame: <%= e.type_exam.title%>
+      </li>
+      <li style="list-style-type: circle;">
+        Código: <%= e.code%>
+      </li>
+      <li style="list-style-type: circle; flex-direction: column;">
+        Descrição: <%= e.description%>
+      </li>
+      <br />
+
+      <% }) %>
+
+      <hr />
+      <br />
+    </ul>
+  </body>
+</html>
