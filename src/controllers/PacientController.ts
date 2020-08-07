@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Pacient } from "@models/Pacient";
 import { Exams } from "@models/Exams";
+import { User } from "@models/User";
 import pdf from "html-pdf";
 import os from "os";
 import path from "path";
 import ejs from "ejs";
-import { User } from "@models/User";
 
 export default {
   async index(req: Request, res: Response) {
@@ -87,6 +87,13 @@ export default {
       fone,
       data_entrega,
       exams,
+
+      street,
+      city,
+      uf,
+      neighborhood,
+      zipcode,
+      number,
     } = req.body;
 
     //tratamento de erro caso o usuario esquece de registrar os exames do paciente
@@ -136,9 +143,19 @@ export default {
             id: Number(user_id),
           },
           exams: chosen_exams,
+
+          street,
+          city,
+          uf,
+          neighborhood,
+          zipcode,
+          number,
         });
 
-        return res.json({ message: "Paciente cadastrado com sucesso!", id: response.id });
+        return res.json({
+          message: "Paciente cadastrado com sucesso!",
+          id: response.id,
+        });
       }
 
       const response = await repo.save({
@@ -152,9 +169,19 @@ export default {
           id: Number(user_id),
         },
         exams: chosen_exams,
+
+        street,
+        city,
+        uf,
+        neighborhood,
+        zipcode,
+        number,
       });
 
-      return res.json({ message: "Paciente cadastrado com sucesso!", id: response.id });
+      return res.json({
+        message: "Paciente cadastrado com sucesso!",
+        id: response.id,
+      });
     } catch (error) {
       return res.json(error);
     }
@@ -188,6 +215,13 @@ export default {
       fone,
       data_entrega,
       exams,
+
+      street,
+      city,
+      uf,
+      neighborhood,
+      zipcode,
+      number,
     } = req.body;
 
     const repo = getRepository(Pacient);
@@ -226,6 +260,13 @@ export default {
     updatePacient.convenio = convenio;
     updatePacient.medico_solicitante = medico_solicitante;
     updatePacient.fone = fone;
+    //dados do endereço
+    updatePacient.uf = uf;
+    updatePacient.city = city;
+    updatePacient.neighborhood = neighborhood;
+    updatePacient.street = street;
+    updatePacient.number = number;
+    updatePacient.zipcode = zipcode;
 
     try {
       await updatePacient.save();

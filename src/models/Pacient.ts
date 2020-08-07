@@ -12,12 +12,11 @@ import {
   BaseEntity,
   OneToOne,
 } from "typeorm";
-import {} from "class-validator";
+import { MaxLength } from "class-validator";
 
 import { User } from "./User";
 
 import { Exams } from "./Exams";
-import { Address } from "./Address";
 
 @Entity("pacients")
 export class Pacient extends BaseEntity {
@@ -48,10 +47,14 @@ export class Pacient extends BaseEntity {
   @Column()
   procedencia: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   medico_solicitante: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   fone: string;
 
   @Column({
@@ -64,6 +67,40 @@ export class Pacient extends BaseEntity {
     default: false,
   })
   status: Boolean;
+
+  //campos do endereço
+  @Column({
+    nullable: true,
+  })
+  street: string;
+
+  @Column({
+    nullable: true,
+  })
+  city: string;
+
+  @Column({
+    nullable: true,
+  })
+  @MaxLength(2, {
+    message: "O uf deve possuir no maximo 2 caracteres",
+  })
+  uf: string;
+
+  @Column({
+    nullable: true,
+  })
+  neighborhood: string;
+
+  @Column({
+    nullable: true,
+  })
+  zipcode: string;
+
+  @Column({
+    nullable: true,
+  })
+  number: number;
 
   @CreateDateColumn()
   created_at: Date;

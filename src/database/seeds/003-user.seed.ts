@@ -5,6 +5,6 @@ import { User } from "../../models/User";
 
 export default class CreateUser implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
-    await factory(User)().createMany(30);
+    await factory(User)().createMany(5);
   }
 }

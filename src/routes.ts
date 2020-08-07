@@ -4,7 +4,6 @@ import PacientController from "@controllers/PacientController";
 import TypeExamsController from "@controllers/TypeExamsController";
 import ExamsController from "@controllers/ExamsController";
 import SessionController from "@controllers/SessionController";
-import AddressController from "@controllers/AddressController";
 
 import authMiddleware from "./middlewares/auth";
 import checkRoles from "./middlewares/checkRoles";
@@ -49,13 +48,6 @@ routes.delete(
   authMiddleware,
   PacientController.delete
 );
-
-/**Rotas para os endereços */
-routes.get("/address", AddressController.index);
-routes.post("/pacients/:pacient_id/address", AddressController.create);
-routes.delete("/address/:address_id", AddressController.delete);
-routes.put("/address/:address_id", AddressController.update);
-routes.get("/pacients/:pacient_id/address", AddressController.show);
 
 /*Rotas para os tipos de exames */
 routes
